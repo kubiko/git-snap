@@ -10,4 +10,9 @@ confinement: strict
 grade: stable
 adopt-info: git
 
+architectures:
+    - build-on: armhf
+    - build-on: arm64
+    - build-on: amd64
+    - build-on: i386
 
