@@ -104,3 +104,8 @@ parts:
                         | sed 's/\"//g; s/;//g')
             snapcraftctl set-version ${version}
 
+    # helper scripts
+    glue:
+        source: glue
+        plugin: dump
+

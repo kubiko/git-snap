@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SNAP_NAME="git-ondra"
+snap alias ${SNAP_NAME}.git            git
+snap alias ${SNAP_NAME}.receive-pack   git-receive-pack
+snap alias ${SNAP_NAME}.shell          git-shell
+snap alias ${SNAP_NAME}.upload-archive git-upload-archive
+snap alias ${SNAP_NAME}.upload-pack    git-upload-pack
