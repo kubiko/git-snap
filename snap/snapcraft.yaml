@@ -10,20 +10,19 @@ confinement: strict
 grade: stable
 adopt-info: git
 
-<<<<<<< HEAD
 architectures:
     - build-on: armhf
     - build-on: arm64
     - build-on: amd64
     - build-on: i386
 
-=======
->>>>>>> 76833be... snap: add layout definition
 environment:
     PATH: $SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH
     LD_LIBRARY_PATH: $SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET
 
-<<<<<<< HEAD
-=======
+layout:
+    /usr/lib/git-core:
+        bind: $SNAP/usr/lib/git-core
+    /usr/share/git-core:
+        bind: $SNAP/usr/share/git-core
 
->>>>>>> 76833be... snap: add layout definition
