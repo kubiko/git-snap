@@ -26,3 +26,81 @@ layout:
     /usr/share/git-core:
         bind: $SNAP/usr/share/git-core
 
+apps:
+    git:
+        command: usr/bin/git
+        command-chain:
+            - bin/git-wrapper
+        adapter: none
+        completer: git-completion.bash
+        plugs:
+            - network-bind
+            - home
+            - removable-media
+            - ssh-keys
+
+    receive-pack:
+        command: usr/bin/git-receive-pack
+        command-chain:
+            - bin/git-wrapper
+        adapter: none
+        completer: git-completion.bash
+        plugs:
+            - network-bind
+            - home
+            - removable-media
+            - ssh-keys
+
+    shell:
+        command: usr/bin/git-shell
+        command-chain:
+            - bin/git-wrapper
+        adapter: none
+        completer: git-completion.bash
+        plugs:
+            - network-bind
+            - home
+            - removable-media
+            - ssh-keys
+
+    upload-archive:
+        command: usr/bin/git-upload-archive
+        command-chain:
+            - bin/git-wrapper
+        adapter: none
+        completer: git-completion.bash
+        plugs:
+            - network-bind
+            - home
+            - removable-media
+            - ssh-keys
+
+    upload-pack:
+        command: usr/bin/git-upload-pack
+        command-chain:
+            - bin/git-wrapper
+        adapter: none
+        completer: git-completion.bash
+        plugs:
+            - network-bind
+            - home
+            - removable-media
+            - ssh-keys
+
+parts:
+    git:
+        plugin: nil
+        stage-packages:
+            - git
+            - openssh-client
+        organize:
+            usr/share/bash-completion/completions/git: git-completion.bash
+        override-build: |
+            snapcraftctl build
+            version=$(awk \
+                        -F ' = ' \
+                        '$1 ~ "our \\$version" {print $2}' \
+                        ${SNAPCRAFT_PART_INSTALL}/usr/share/gitweb/gitweb.cgi \
+                        | sed 's/\"//g; s/;//g')
+            snapcraftctl set-version ${version}
+
