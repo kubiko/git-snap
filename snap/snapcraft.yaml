@@ -1,5 +1,5 @@
 name: git-ondra
-summary: git client 
+summary: git client
 description: |
  git client as snap
  To setup aliases for git command, run: $ /snap/git-ondra/current/bin/set-aliases
@@ -19,6 +19,7 @@ architectures:
 environment:
     PATH: $SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH
     LD_LIBRARY_PATH: $SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET
+    GIT_CONFIG: $SNAP_USER_COMMON/.gitconfig
 
 layout:
     /usr/lib/git-core:
@@ -108,4 +109,3 @@ parts:
     glue:
         source: glue
         plugin: dump
-
