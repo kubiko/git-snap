@@ -4,7 +4,7 @@ description: |
  git client as snap
  To setup aliases for git command, run: $ /snap/git-ondra/current/bin/set-aliases
 
-base: core18
+base: core20
 
 confinement: strict
 grade: stable
