@@ -4,7 +4,7 @@ description: |
  git client as snap
  To setup aliases for git command, run: $ /snap/git-ondra/current/bin/set-aliases
 
-base: core20
+base: core22
 
 confinement: strict
 grade: stable
@@ -14,11 +14,11 @@ architectures:
     - build-on: armhf
     - build-on: arm64
     - build-on: amd64
-    - build-on: i386
+    - build-on: riscv64
 
 environment:
     PATH: $SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH
-    LD_LIBRARY_PATH: $SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH:$SNAP/lib:$SNAP/usr/lib:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET
+    LD_LIBRARY_PATH: $SNAP/lib:$SNAP/usr/lib:$SNAP/lib/$CRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET
     # use COMMON data as home dir instead of per revision home
     HOME: $SNAP_USER_COMMON
 
@@ -33,7 +33,6 @@ apps:
         command: usr/bin/git
         command-chain:
             - bin/git-wrapper
-        adapter: none
         completer: git-completion.bash
         plugs:
             - network-bind
@@ -45,7 +44,6 @@ apps:
         command: usr/bin/git-receive-pack
         command-chain:
             - bin/git-wrapper
-        adapter: none
         completer: git-completion.bash
         plugs:
             - network-bind
@@ -57,7 +55,6 @@ apps:
         command: usr/bin/git-shell
         command-chain:
             - bin/git-wrapper
-        adapter: none
         completer: git-completion.bash
         plugs:
             - network-bind
@@ -69,7 +66,6 @@ apps:
         command: usr/bin/git-upload-archive
         command-chain:
             - bin/git-wrapper
-        adapter: none
         completer: git-completion.bash
         plugs:
             - network-bind
@@ -81,7 +77,6 @@ apps:
         command: usr/bin/git-upload-pack
         command-chain:
             - bin/git-wrapper
-        adapter: none
         completer: git-completion.bash
         plugs:
             - network-bind
@@ -98,13 +93,13 @@ parts:
         organize:
             usr/share/bash-completion/completions/git: git-completion.bash
         override-build: |
-            snapcraftctl build
+            craftctl default
             version=$(awk \
                         -F ' = ' \
                         '$1 ~ "our \\$version" {print $2}' \
-                        ${SNAPCRAFT_PART_INSTALL}/usr/share/gitweb/gitweb.cgi \
+                        ${CRAFT_PART_INSTALL}/usr/share/gitweb/gitweb.cgi \
                         | sed 's/\"//g; s/;//g')
-            snapcraftctl set-version ${version}
+            craftctl set version="${version}"
 
     # helper scripts
     glue:
