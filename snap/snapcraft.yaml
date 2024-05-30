@@ -11,97 +11,97 @@ grade: stable
 adopt-info: git
 
 architectures:
-    - build-on: armhf
-    - build-on: arm64
-    - build-on: amd64
-    - build-on: riscv64
+  - build-on: armhf
+  - build-on: arm64
+  - build-on: amd64
+  - build-on: riscv64
 
 environment:
-    PATH: $SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH
-    LD_LIBRARY_PATH: $SNAP/lib:$SNAP/usr/lib:$SNAP/lib/$CRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET
-    # use COMMON data as home dir instead of per revision home
-    HOME: $SNAP_USER_COMMON
+  PATH: $SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH
+  LD_LIBRARY_PATH: $SNAP/lib:$SNAP/usr/lib:$SNAP/lib/$CRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET
+  # use COMMON data as home dir instead of per revision home
+  HOME: $SNAP_USER_COMMON
 
 layout:
-    /usr/lib/git-core:
-        bind: $SNAP/usr/lib/git-core
-    /usr/share/git-core:
-        bind: $SNAP/usr/share/git-core
+  /usr/lib/git-core:
+    bind: $SNAP/usr/lib/git-core
+  /usr/share/git-core:
+    bind: $SNAP/usr/share/git-core
 
 apps:
-    git:
-        command: usr/bin/git
-        command-chain:
-            - usr/bin/git-wrapper
-        completer: git-completion.bash
-        plugs:
-            - network-bind
-            - home
-            - removable-media
-            - ssh-keys
+  git:
+    command: usr/bin/git
+    command-chain:
+      - usr/bin/git-wrapper
+    completer: git-completion.bash
+    plugs:
+      - network-bind
+      - home
+      - removable-media
+      - ssh-keys
 
-    receive-pack:
-        command: usr/bin/git-receive-pack
-        command-chain:
-            - usr/bin/git-wrapper
-        completer: git-completion.bash
-        plugs:
-            - network-bind
-            - home
-            - removable-media
-            - ssh-keys
+  receive-pack:
+    command: usr/bin/git-receive-pack
+    command-chain:
+      - usr/bin/git-wrapper
+    completer: git-completion.bash
+    plugs:
+      - network-bind
+      - home
+      - removable-media
+      - ssh-keys
 
-    shell:
-        command: usr/bin/git-shell
-        command-chain:
-            - usr/bin/git-wrapper
-        completer: git-completion.bash
-        plugs:
-            - network-bind
-            - home
-            - removable-media
-            - ssh-keys
+  shell:
+    command: usr/bin/git-shell
+    command-chain:
+      - usr/bin/git-wrapper
+    completer: git-completion.bash
+    plugs:
+      - network-bind
+      - home
+      - removable-media
+      - ssh-keys
 
-    upload-archive:
-        command: usr/bin/git-upload-archive
-        command-chain:
-            - usr/bin/git-wrapper
-        completer: git-completion.bash
-        plugs:
-            - network-bind
-            - home
-            - removable-media
-            - ssh-keys
+  upload-archive:
+    command: usr/bin/git-upload-archive
+    command-chain:
+      - usr/bin/git-wrapper
+    completer: git-completion.bash
+    plugs:
+      - network-bind
+      - home
+      - removable-media
+      - ssh-keys
 
-    upload-pack:
-        command: usr/bin/git-upload-pack
-        command-chain:
-            - usr/bin/git-wrapper
-        completer: git-completion.bash
-        plugs:
-            - network-bind
-            - home
-            - removable-media
-            - ssh-keys
+  upload-pack:
+    command: usr/bin/git-upload-pack
+    command-chain:
+      - usr/bin/git-wrapper
+    completer: git-completion.bash
+    plugs:
+      - network-bind
+      - home
+      - removable-media
+      - ssh-keys
 
 parts:
-    git:
-        plugin: nil
-        stage-packages:
-            - git
-            - openssh-client
-        organize:
-            usr/share/bash-completion/completions/git: git-completion.bash
-        override-build: |
-            craftctl default
-            version=$(awk \
-                        -F ' = ' \
-                        '$1 ~ "our \\$version" {print $2}' \
-                        ${CRAFT_PART_INSTALL}/usr/share/gitweb/gitweb.cgi \
-                        | sed 's/\"//g; s/;//g')
-            craftctl set version="${version}"
+  git:
+    plugin: nil
+    stage-packages:
+      - git
+      - openssh-client
+    organize:
+      usr/share/bash-completion/completions/git: git-completion.bash
+    override-build: |
+      craftctl default
+      version=$(awk \
+                    -F ' = ' \
+                    '$1 ~ "our \\$version" {print $2}' \
+                    ${CRAFT_PART_INSTALL}/usr/share/gitweb/gitweb.cgi \
+                | sed 's/\"//g; s/;//g')
+      craftctl set version="${version}"
 
-    # helper scripts
-    glue:
-        source: glue
-        plugin: dump
+  # helper scripts
+  glue:
+    source: glue
+    plugin: dump
