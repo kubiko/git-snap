@@ -2,7 +2,7 @@ name: git-ondra
 summary: git client
 description: |
  git client as snap
- To setup aliases for git command, run: $ /snap/git-ondra/current/bin/set-aliases
+ To setup aliases for git command, run: $ /snap/git-ondra/current/usr/bin/set-aliases
 
 base: core22
 
@@ -32,7 +32,7 @@ apps:
     git:
         command: usr/bin/git
         command-chain:
-            - bin/git-wrapper
+            - usr/bin/git-wrapper
         completer: git-completion.bash
         plugs:
             - network-bind
@@ -43,7 +43,7 @@ apps:
     receive-pack:
         command: usr/bin/git-receive-pack
         command-chain:
-            - bin/git-wrapper
+            - usr/bin/git-wrapper
         completer: git-completion.bash
         plugs:
             - network-bind
@@ -54,7 +54,7 @@ apps:
     shell:
         command: usr/bin/git-shell
         command-chain:
-            - bin/git-wrapper
+            - usr/bin/git-wrapper
         completer: git-completion.bash
         plugs:
             - network-bind
@@ -65,7 +65,7 @@ apps:
     upload-archive:
         command: usr/bin/git-upload-archive
         command-chain:
-            - bin/git-wrapper
+            - usr/bin/git-wrapper
         completer: git-completion.bash
         plugs:
             - network-bind
@@ -76,7 +76,7 @@ apps:
     upload-pack:
         command: usr/bin/git-upload-pack
         command-chain:
-            - bin/git-wrapper
+            - usr/bin/git-wrapper
         completer: git-completion.bash
         plugs:
             - network-bind
