@@ -86,9 +86,8 @@ parts:
       craftctl default
       version=$(awk \
                     -F ' = ' \
-                    '$1 ~ "our \\$version" {print $2}' \
-                    ${CRAFT_PART_INSTALL}/usr/share/gitweb/gitweb.cgi \
-                | sed 's/\"//g; s/;//g')
+                    '$1 ~ "our \\$version" {gsub(/"/,"",$2); gsub(/;/,"",$2); print $2}' \
+                    ${CRAFT_PART_INSTALL}/usr/share/gitweb/gitweb.cgi)
       craftctl set version="${version}"
     stage:
       - -usr/sbin
