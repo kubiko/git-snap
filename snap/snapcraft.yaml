@@ -4,21 +4,21 @@ description: |
  git client as snap
  To setup aliases for git command, run: $ /snap/git-ondra/current/usr/bin/set-aliases
 
-base: core22
+base: core24
 
 confinement: strict
 grade: stable
 adopt-info: git
 
-architectures:
-  - build-on: armhf
-  - build-on: arm64
-  - build-on: amd64
-  - build-on: riscv64
+platforms:
+  armhf:
+  arm64:
+  amd64:
+  riscv64:
 
 environment:
-  PATH: $SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH
-  LD_LIBRARY_PATH: $SNAP/lib:$SNAP/usr/lib:$SNAP/lib/$CRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET
+  PATH: $SNAP/usr/bin:$PATH
+  LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
   # use COMMON data as home dir instead of per revision home
   HOME: $SNAP_USER_COMMON
 
@@ -100,6 +100,13 @@ parts:
                     ${CRAFT_PART_INSTALL}/usr/share/gitweb/gitweb.cgi \
                 | sed 's/\"//g; s/;//g')
       craftctl set version="${version}"
+    stage:
+      - -usr/sbin
+      - -usr/share/bash-completion
+      - -usr/share/doc
+      - -usr/share/man
+      - -usr/share/perl*
+      - -var
 
   # helper scripts
   glue:
